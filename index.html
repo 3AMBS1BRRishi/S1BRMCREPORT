@@ -1,0 +1,388 @@
+<html lang="en"><head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Ops Reporting Template</title>
+		<style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            #whatsappmsg{
+                height: 200px;
+            }
+
+            #whatsappmsgb{
+                position: absolute;
+                margin-top: 25px;
+                left: 50%;
+            }
+
+            #title{
+                text-align: center;
+            }
+
+            .tooltip{
+                color: #c05b49;
+                font-size: 14px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                margin-top: -10px;
+                padding-top: -15px;
+            }
+
+            /* Style inputs, select elements and textareas */
+            input[type=text], select, textarea{
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            }
+
+            /* Style the label to display next to the inputs */
+            label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+            }
+
+            /* Style the submit button */
+            input[type=submit] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            }
+
+            /* Style the container */
+            .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            }
+
+            /* Floating column for labels: 25% width */
+            .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+            }
+
+            /* Floating column for inputs: 75% width */
+            .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+
+            /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+            @media screen and (max-width: 600px) {
+            .col-25, .col-75, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+            }
+            /* CSS */
+            .button-3 {
+            appearance: none;
+            background-color: #2ea44f;
+            border: 1px solid rgba(27, 31, 35, .15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+            box-sizing: border-box;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            padding: 6px 16px;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            }
+
+            .button-3:focus:not(:focus-visible):not(.focus-visible) {
+            box-shadow: none;
+            outline: none;
+            }
+
+            .button-3:hover {
+            background-color: #2c974b;
+            }
+
+            .button-3:focus {
+            box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+            outline: none;
+            }
+
+            .button-3:active {
+            background-color: #298e46;
+            box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+            }
+
+            .button-4 {
+            appearance: none;
+            background-color: #9ec9f5;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            border-radius: 6px;
+            box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #24292E;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            list-style: none;
+            padding: 6px 16px;
+            position: relative;
+            transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: middle;
+            white-space: nowrap;
+            word-wrap: break-word;
+            }
+
+            .button-4:hover {
+            background-color: #8bb2da;
+            text-decoration: none;
+            transition-duration: 0.1s;
+            }
+
+            .button-4:disabled {
+            background-color: #f5ab9e;
+            border-color: rgba(27, 31, 35, 0.15);
+            color: #959DA5;
+            cursor: default;
+            }
+
+            .button-4:active {
+            background-color: #8cbff1;
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+            }
+
+            .button-4:focus {
+            outline: 1px transparent;
+            }
+
+            .button-4:before {
+            display: none;
+            }
+
+            .button-4:-webkit-details-marker {
+            display: none;
+            }
+
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var day, month, year;
+
+                $('#startdate').on('click', function(){
+                  day = $('#date-input').getDate();
+                  month = $('#date-input').getMonth() + 1;
+                  year = $('#date-input').getFullYear();
+                });
+
+                $('#enddate').on('click', function(){
+                  day = $('#date-input').getDate();
+                  month = $('#date-input').getMonth() + 1;
+                  year = $('#date-input').getFullYear();
+                });
+
+                $('.button-4').prop('disabled',true);
+                $('#nric').keyup(function(){
+                    $('.button-4').prop('disabled', nricValidator($('#nric').val()) ? false : true);
+                    if(nricValidator($('#nric').val()) == true){
+                        var el = document.getElementById('tooltip');
+                        el.style.display = "none";
+                    }else{
+                        var el2 = document.getElementById('tooltip');
+                        el2.style.display = "block";
+                    }
+                })
+
+                function nricValidator(nricInput) {
+                    // validation rules
+                    const nricRegex = /(\D)(\d{7})(\D)/;
+                    const nricTypeRegex = /S|T|F|G/;
+                    const weightArr = [2, 7, 6, 5, 4, 3, 2];
+                    const nricLetterST = ['J', 'Z', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
+                    const nricLetterFG = ['X', 'W', 'U', 'T', 'R', 'Q', 'P', 'N', 'M', 'L', 'K'];
+
+                    // set nric to all uppercase to remove case sensitivity
+                    const nric = nricInput.toUpperCase();
+
+                    // returns false if it false basic validation
+                    if (!nricRegex.exec(nric)) {
+                    return false;
+                    }
+
+                    // get nric type
+                    const nricArr = nric.match(nricRegex);
+                    const nricType = nricArr[1];
+
+                    // returns false if it false basic validation
+                    if (!nricTypeRegex.exec(nricType)) {
+                    return false;
+                    }
+
+                    // multiply each digit in the nric number by it's weight in order
+                    const nricDigitsArr = nricArr[2].split('');
+                    let total = 0;
+                    for (let i = 0; i < nricDigitsArr.length; i++) {
+                    total += parseInt(nricDigitsArr[i]) * weightArr[i] ;
+                    }
+
+                    // if the nric type is T or G, add 4 to the total
+                    if (['T', 'G'].indexOf(nricType) >= 0) {
+                    total += 4;
+                    }
+
+                    // check last letter of nric for local
+                    const letterIndex = total % 11;
+                    const nricLetter = nricArr[3];
+                    if (['S', 'T'].indexOf(nricType) >= 0) {
+                    return nricLetterST[letterIndex] === nricLetter;
+                    }
+
+                    // check last letter of nric for foreigners
+                    return nricLetterFG[letterIndex] === nricLetter;
+                }
+            });
+        </script>
+	</head>
+	<body>
+		<div class="container">
+			<form action="action_page.php">
+                <h1 id="title">S1 BR MC REPORTING</h1>
+                <div class="container">
+                    <h3>Details Of Personnel Involved</h3>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="rank">Rank</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="rank" name="jrank" placeholder="Your Rank">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Full Name</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="name" name="jname" placeholder="Full Name as 11B / NRIC">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="nric">Full NRIC</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="nric" name="jnric" placeholder="Your Full NRIC">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="dpbr">Depot</label>
+                        </div>
+                        <div class="col-75">
+                            <select id="dpbr" name="dpbr">
+                                <option value="bhq">BHQ</option>
+                                <option value="31">31FMD</option>
+                                <option value="32">32FMD</option>
+                                <option value="33">33FMD</option>
+                                <option value="34">34FMD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="mctype">MC Type </label>
+                        </div>
+                        <div class="col-75">
+                            <select id="mctype" name="mctype">
+                                <option>RSO MC</option>
+                                <option>RSI MC</option>
+                                <option>MA MC</option>
+                                <option>HL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="mcduration">MC Duration</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="mcduration" name="jmcduration" placeholder="Number of days in numerals">
+                            <p id="mcresult" name="mcresult"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="startdate">Start of MC</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="date" id="startdate" name="jstartdate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="enddate">End of MC</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="date" id="enddate" name="jenddate">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="appliedess">Applied on ESS? </label>
+                        </div>
+                        <div class="col-75">
+                            <select id="appliedess" name="apliedess">
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <input class="button-4" type="button" onclick="generateReport()" id="genReportBtn" value="Generate Report" disabled="">
+                  <div class="tooltip" id="tooltip">
+                      <p>NRIC is not correct</p>
+                  </div>
+                </div>
+                <div class="message">
+                    <h3>Generated Message</h3>
+                    <textarea id="whatsappmsg" name="whatsappmsg" readonly=""></textarea><br>
+                    <input class="button-3" type="button" data-clipboard-target="#whatsappmsg" href="#popup1" value="Copy Text" id="buttoncopy" onclick="myFunctionAlert()">
+                </div>
+			</form>
+		</div>
+        <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+        <script src="moveDiv.js" type="text/javascript"></script>
+
+
+</body></html>
